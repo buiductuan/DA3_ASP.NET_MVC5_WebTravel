@@ -1,0 +1,268 @@
+﻿body {
+    font-family: "Roboto", Arial, sans-serif !important;
+}
+
+.file-field label {
+    cursor: pointer;
+}
+
+.file-field input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.panel-default > .panel-heading {
+    background-color: #fff !important;
+}
+
+em {
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+.vSwitch .switch {
+    position: relative;
+    width: 42px;
+    height: 24px;
+    background: #f16b6b;
+    cursor: pointer;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+    .vSwitch .switch .button {
+        position: absolute;
+        left: 0;
+        margin: 2px;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        -ms-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+
+.vSwitch.on .switch {
+    background: #0c3;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+    .vSwitch.on .switch .button {
+        left: 18px;
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        -ms-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+
+.vSwitch.small .switch {
+    width: 34px;
+    height: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+    .vSwitch.small .switch .button {
+        width: 16px;
+        height: 16px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+.vSwitch.small.on .switch .button {
+    left: 14px;
+}
+
+.vSwitch.large .switch {
+    width: 50px;
+    height: 28px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+}
+
+    .vSwitch.large .switch .button {
+        width: 24px;
+        height: 24px;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+    }
+
+.vSwitch.large.on .switch .button {
+    left: 22px;
+}
+
+
+.example label {
+    float: left;
+    margin-right: 5px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.example .vSwitch {
+    float: left;
+}
+
+.table tbody :hover {
+    background-color: #efefef !important;
+    cursor: pointer;
+}
+
+.invalid {
+    border: 1px solid #f16b6b !important;
+    box-shadow: none !important;
+}
+
+.error_label {
+    color: #f16b6b !important;
+}
+
+.success_label {
+    color: #3bd388 !important;
+}
+
+.format_price {
+    font-weight: 700;
+    color: #f16b6b;
+    font-size: 18pt;
+}
+
+.form-authentication .form-group .form-control {
+    font-size: 17px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-radius: 7px;
+    padding-left: 15px;
+}
+
+.form-authentication button {
+    padding-top: 15px;
+    padding-bottom: 36px;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.form-authentication label {
+    font-size: 16px;
+}
+.published-theme {
+    background-image: url('../../../../images/images/macbook-frame.png');
+    background-position: 0 1px;
+    background-repeat: no-repeat;
+    height: 469px;
+    margin: 0 auto;
+    position: relative;
+    width: 736px;
+    overflow: hidden;
+}
+.published-theme iframe {
+    backface-visibility: hidden;
+    background-color: #fff;
+    border: medium none;
+    height: 694px;
+    margin-left: 27px;
+    overflow: hidden;
+    pointer-events: none;
+    position: relative;
+    top: 60px;
+    transform: scale(.59);
+    -webkit-transform: scale(.59);
+    -moz-transform: scale(.59);
+    transform-origin: 0 0 0;
+    -webkit-transform-origin: 0 0 0;
+    -moz-transform-origin: 0 0 0;
+    transform-style: preserve-3d;
+    transition: all .3s ease-in-out 0s;
+    width: 1159px;
+}
+.header{
+    padding-top:20px;
+    padding-bottom:20px;
+}
+#main-wapper{
+	padding-left: 0px;
+	padding-top: 10px;
+}
+.navbar{
+	margin-bottom: 0px;
+	height: auto;
+}
+.theme iframe{
+	/*backface-visibility: hidden;*/
+    background-color: #fff;
+    border: medium none;
+    height: 994px;
+    /*margin-left: 30px;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;*/
+    transform: scale(.59);
+    -webkit-transform: scale(.59);
+    -moz-transform: scale(.59);
+    transform-origin: 0 0 0;
+    -webkit-transform-origin: 0 0 0;
+    -moz-transform-origin: 0 0 0;
+    transform-style: preserve-3d;
+    transition: all .3s ease-in-out 0s;
+    width: 1470px;
+}
+.theme{
+    background-position: 0 1px;
+    background-repeat: no-repeat;
+    height: 609px;
+    /*margin: 0 auto;*/
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.screen{
+	bottom: 15px;
+	position: fixed;
+	left: 30px;
+}
+.text-2x{
+    font-size: 14pt;
+}
+.screen ul{
+    padding:0px;
+}
+.sub2 {
+    font-size: 10.7pt;
+    font-weight: 400;
+}

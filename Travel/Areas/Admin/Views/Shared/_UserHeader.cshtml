@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.UserID = ViewBag.ID_Session;
+}
+<div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="~/images/images/User/@ViewBag.ImageUser" class="user-image" alt="User Image">
+                <span class="hidden-xs">@ViewBag.Name</span>
+            </a>
+            <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                    <img src="~/images/images/User/@ViewBag.ImageUser" class="img-circle" alt="User Image">
+                    <p>
+                        @ViewBag.Name
+                    </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <div class="pull-left">
+                        <a href="/Admin/User/ProfileUser/@ViewBag.UserID" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                        <a href="/Admin/Home/SignOut" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

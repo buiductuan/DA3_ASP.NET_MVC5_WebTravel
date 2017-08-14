@@ -1,0 +1,238 @@
+﻿@model Model.EntityFramework.User
+@{
+    var count_product = (long)ViewBag.CountProductAdd;
+    var count_news = (long)ViewBag.CountNewsAdd;
+
+    var ListProduct = (IEnumerable<Model.EntityFramework.Product>)ViewBag.ListProductCreateby;
+    var ListNews = (IEnumerable<Model.EntityFramework.Newsletter>)ViewBag.ListNewsCreateby;
+    ViewBag.Title = "ProfileUser | " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    @Model.Name
+}
+@section header_a{
+    @Model.Name
+}
+@section jsFooter{
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#image_preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageAvatar").change(function () {
+            readURL(this);
+        });
+    </script>
+}
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="~/images/images/User/@Model.Image" alt="@Model.Name">
+                    <h3 class="profile-username text-center">@Model.Name</h3>
+                    <p class="text-muted text-center">Nhân viên</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Sản phẩm đã thêm</b> <a class="pull-right">@count_product</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Tin tức đã thêm</b> <a class="pull-right">@count_news</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Đơn hàng đã tạo</b> <a class="pull-right"></a>
+                        </li>
+                    </ul>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            <!-- About Me Box -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Me</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <strong><i class="fa fa-book margin-r-5"></i></strong>
+                    <p class="text-muted">
+                        @(Model.About != null ? Model.About : "Đang cập nhật")
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+                    <p class="text-muted">@(Model.Address != null ? Model.Address : "Đang cập nhật")</p>
+                    <hr>
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                    <p>@(Model.Note != null ? Model.Note : "Đang cập nhật")</p>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#settings" data-toggle="tab">Thông tin cá nhân</a></li>
+                    <li><a href="#timeline" data-toggle="tab">Hoạt động</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="settings">
+                        @using (Html.BeginForm("ProfileUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div hidden="hidden">
+                                @Html.TextBoxFor(model => model.UserName)
+                            </div>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    @Html.ValidationSummary(false, "", new { @class = "error_cutom" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-2 control-label">Tên</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-2 control-label">Điện thoại</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="imageAvatar" class="col-sm-2 control-label">Ảnh đại diện</label>
+                                    <div class="col-sm-10">
+                                        <div class="file-field">
+                                            <input type="file" name="file" accept="image/x-png,image/jpeg" id="imageAvatar" />
+                                            <img id="image_preview" src="~/images/images/User/@Model.Image" class="img-responsive img-circle" width="100" alt="Chọn ảnh đại diện" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">Địa chỉ</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">Giới thiệu</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextAreaFor(model => model.About, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">Ghi chú</label>
+                                    <div class="col-sm-10">
+                                        @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="timeline">
+                        <!-- The timeline -->
+                        <ul class="timeline timeline-inverse">
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                <span class="bg-red">
+                                    Sản phẩm đã thêm
+                                </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa fa-list-ul bg-blue"></i>
+                                <div class="timeline-item">
+                                    <h3 class="timeline-header"><a href="/Admin/Product">Danh sách sản phẩm đã thêm</a></h3>
+                                    <div class="timeline-body">
+                                        <table class="table">
+                                            <tbody>
+                                                @foreach (var item in ListProduct)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <img class="img-responsive" width="100" height="100" src="~/images/images/Products/@item.Image" alt="@item.Name" />
+                                                        </td>
+                                                        <td>
+                                                            <a href="/Admin/Product/Update/@item.ID">@(item.Name)</a>
+                                                        </td>
+                                                        <td>
+                                                            @(Convert.ToDateTime(item.CreatedDate).ToShortDateString() +" "+ Convert.ToDateTime(item.CreatedDate).ToShortTimeString() )
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="timeline-footer">
+
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                <span class="bg-green">
+                                    Tin tức đã thêm
+                                </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa fa-book bg-blue"></i>
+                                <div class="timeline-item">
+                                    <h3 class="timeline-header"><a href="/Admin/Product">Danh sách tin tức đã thêm</a></h3>
+                                    <div class="timeline-body">
+                                        <table class="table">
+                                            <tbody>
+                                                @foreach (var item in ListNews)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <img class="img-responsive" width="100" height="100" src="~/images/images/Newsletter/@item.Image" alt="@item.Name" />
+                                                        </td>
+                                                        <td>
+                                                            <a href="/Admin/Product/Update/@item.ID">@(item.Name)</a>
+                                                        </td>
+                                                        <td>
+                                                            @(Convert.ToDateTime(item.CreatedDate).ToShortDateString() + " " + Convert.ToDateTime(item.CreatedDate).ToShortTimeString() )
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="timeline-footer">
+
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div><!-- /.tab-pane -->
+                </div>
+
+            </div><!-- /.nav-tabs-custom -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+</section><!-- /.content -->

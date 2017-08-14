@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.FeedBack>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "TravelHappy |  Phản hồi khách hàng";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Phản hồi khách hàng
+}
+@section header_a{
+    Phản hồi khách hàng
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/controllers/FeedbackController.js"></script>
+}
+@if (Model.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-11">
+                                @using (Html.BeginForm("Index", "Feedback", FormMethod.Get))
+                                {
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="@ViewBag.QuerySearch" name="q" placeholder="Nhập từ khóa tìm kiếm ...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="submit">Tìm kiếm</button>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <table class="table text-center">
+                                <thead>
+                                <th>Tên khách hàng</th>
+                                <th>Email</th>
+                                <th>Nội dung</th>
+                                <th>Trạng thái</th>
+                                <th>Hiện trên web</th>
+                                <td></td>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="row_@item.ID">
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                            <td>@item.Email</td>
+                                            <td><a href="#" class="btn_view" data-id="@item.ID">@item.Content.Substring(0,20)</a> ...</td>
+                                            <td>
+                                                <a href="#" id="status_read" data-id="@item.ID">@Html.Raw(item.Status ? "<label class=\"label label-success\">Đã xem</label>" : "<label class=\"label label-danger\">Chưa xem</label>")</a>
+                                            </td>
+                                            <td>
+                                                <a href="#" id="show_@item.ID" class="btn-show-home" data-id="@item.ID">@Html.Raw(item.ShowOnPage ? "<label class=\"label label-success\">Hiển thị </label>" : "<label class=\"label label-danger\">Ẩn</label>")</a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn_Delete" data-id="@item.ID"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="container">
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, q = ViewBag.QuerySearch }))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container text-center">
+        <h2>Nơi quản lý phản hồi của khách hàng về dịch vụ của bạn</h2>
+        <p class="text-muted">Khách hàng sẽ có những phản hồi mà từ họ khi họ sử dụng dịch vụ của hệ thống</p>
+        <img class="img-responsive center-block" src="~/images/images/Admin/danhsachkhachhang-01.svg" style="margin-top:20px;margin-bottom:20px;" />
+    </div>
+}

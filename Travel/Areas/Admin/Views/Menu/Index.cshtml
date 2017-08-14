@@ -1,0 +1,87 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.Menu>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "TravelHappy | Menu";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Quản lý menu
+}
+@section header_a{
+    Quản lý menu
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/controllers/MenuController.js"></script>
+}
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-11">
+            <a href="/Admin/Menu/CreateMenu" class="btn btn-primary pull-left">Thêm menu</a>
+            <a href="#" id="addMenutype" data-toggle="modal" data-target="#modal_add_menuType" class="btn btn-primary pull-right">Thêm loại menu</a>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <h4><b>Danh sách menu</b></h4>
+            <p class="text-muted">Danh sách menu sẽ giúp khách hàng duyệt web của bạn dễ dàng hơn. </p>
+            <p class="text-muted">Bạn có thể áp dụng chúng cho giao diện của bạn trong <a href="/Admin/Themes">Chỉnh sửa giao diện</a></p>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <th>Tên</th>
+                            <th>Đường dẫn</th>
+                            <th>Trạng thái</th>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model)
+                            {
+                                <tr class="row_@item.ID">
+                                    <td>
+                                        <a href="/Admin/Menu/UpdateMenu/@item.ID">@item.Text</a>
+                                    </td>
+                                    <td>@(item.Link.ToString().Replace('/',' '))</td>
+                                    <td>
+                                        <a href="#" class="btn-active" data-id="@item.ID">@(item.Status? Html.Raw("<label class=\"label label-success btn-lg\">Hiển thị</label>") : Html.Raw("<label class=\"label label-danger btn-lg\">Ẩn</label>"))</a>
+                                    </td>
+                                    <td>
+                                        @if (item.ID == 25 || item.ID == 26 || item.ID == 27 || item.ID == 28 || item.ID == 29 || item.ID == 30) { }
+                                        else {<a href="#" class="btn_delete" data-id="@item.ID"><i class="fa fa-trash"></i></a>}
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_add_menuType">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Thêm loại menu</h4>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="form-group">
+                    <label id="error_Name_MenuType">Loại menu</label>
+                    <input id="txtNameMenuType" type="text" class="form-control" placeholder="Tên loại menu" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSaveMenuType" type="submit" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

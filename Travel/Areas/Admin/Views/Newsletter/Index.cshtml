@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.Newsletter>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "TravelHappy | Quản lý tin tức";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Quản lý tin tức
+}
+@section header_a{
+    Quản lý tin tức
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/controllers/NewsletterController.js"></script>
+}
+<div class="container">
+    <div class="col-md-6">
+        <a href="/Admin/Newsletter/Create" class="btn btn-primary">Thêm mới</a>
+        <hr />
+    </div>
+    <div class="col-md-11">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @*Search*@
+                <div class="row">
+                    <div class="col-md-11">
+                        @using (Html.BeginForm("Index", "Newsletter", FormMethod.Get))
+                        {
+                            <div class="input-group">
+                                <div class="ui-widget">
+                                    <input type="text" class="form-control" id="txtSearch" value="@ViewBag.QuerySearch" name="q" placeholder="Nhập từ khóa tìm kiếm ...">
+                                </div>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Tìm kiếm</button>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @*./Search*@
+
+            </div>
+            <div class="panel-body">
+
+                @*List*@
+                <table class="table">
+                    <thead>
+                    <th></th>
+                    <th>Tiêu đề</th>
+                    <th>Ngày tạo</th>
+                    <th>Trạng thái</th>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.ID">
+                                <td>
+                                    <img src="~/images/images/Newsletter/@item.Image" class="img-responsive center-block" width="100" alt="@item.Image" />
+                                </td>
+                                <td>
+                                    <a href="/Admin/Newsletter/Update/@item.ID">
+                                        @(item.Name.ToString().Substring(0,20) + " ...")
+                                    </a>
+                                </td>
+                                <td>@Convert.ToDateTime(item.CreatedDate).ToShortDateString()</td>
+                                <td>
+                                    <a href="#" class="btn-active" data-id="@item.ID">@(item.Status ? "Hiển thị" : "Ẩn")</a>
+                                </td>
+                                <td>
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                               {
+                                   Confirm = "Bạn có muốn xóa danh mục : " + item.Name + " không ?",
+                                   OnComplete = "$('#row_" + item.ID + "').remove()",
+                                   HttpMethod = "Delete"
+                               })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, q = ViewBag.QuerySearch }))
+                @*./List*@
+            </div>
+        </div>
+
+    </div>
+</div>

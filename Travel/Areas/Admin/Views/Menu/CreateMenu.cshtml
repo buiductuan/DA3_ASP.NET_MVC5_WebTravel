@@ -1,0 +1,74 @@
+﻿@model Model.EntityFramework.Menu
+@{
+    ViewBag.Title = "CreateMenu";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section header_h1{
+    Thêm mới menu
+}
+@section header_a{
+    Thêm mới menu
+}
+<div class="container">
+    @using (Html.BeginForm("CreateMenu", "Menu", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Thuộc tính menu</h4>
+                <p class="text-muted">Thêm các thuộc tính của menu tại đây</p>
+                <br />
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @Html.ValidationSummary(false, "", new { @class="error_custom"})
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group clearfix">
+                            <label>Tên menu <small class="text-danger">*</small></label>
+                            <small class="text-danger pull-right">@Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })</small>
+                            @Html.TextBoxFor(model => model.Text, new { @class="form-control",@placeholder="Nhập tên menu"})
+                        </div>
+                        <div class="form-group clearfix">
+                            <label>Đường dẫn <small class="text-danger">*</small></label>
+                            <small class="text-danger pull-right">@Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })</small>
+                            <div class="input-group">
+                                <span class="input-group-addon">https://travelhappy.com/</span>
+                                @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @placeholder = "duong-dan-menu" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Loại menu</label>
+                                    @Html.DropDownListFor(model => model.TypeID,null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Trạng thái</h4>
+                <p class="text-muted">Cho phép thiết lập thời gian sản phẩm được hiển thị.</p>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Status, new { @checked = "checked" }) &nbsp; <b>Hiển thị</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

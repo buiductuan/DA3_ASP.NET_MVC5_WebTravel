@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "TravelHappy | Quản lý tên miền";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Quản lý tên miền
+}
+@section header_a{
+    Quản lý tên miền
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/plugins/mustache/mustache.min.js"></script>
+    <script src="~/Assets/Admin/controllers/DomainController.js"></script>
+}
+<div class="container">
+    <div class="col-md-11">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                    <th>Tên miền</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Tên miền chính</th>
+                    </thead>
+                    <tbody id="tblData"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="data-template" type="x-tmpl-mustache">
+    <tr>
+        <td><a href="#">{{Name}}</a></td>
+        <td class="text-center"><b>{{{Status}}}</b></td>
+        <td class="text-center"><b>{{{Just}}}</b></td>
+        <td><a href="#" class="btn-edit"><i class="fa fa-pencil"></i></a></td>
+        <td>
+            <button class="btn btn-primary btn-remove" data-id="{{ID}}">Xóa</button>
+        </td>
+    </tr>
+</script>
+

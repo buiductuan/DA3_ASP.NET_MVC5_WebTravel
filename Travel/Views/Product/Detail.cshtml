@@ -1,0 +1,163 @@
+﻿@model Model.EntityFramework.Product
+@{
+    var system = (Model.EntityFramework.SystemConfig)ViewBag.SystemConfig;
+    var listTag = (List<Model.EntityFramework.Tag>)ViewBag.ListTags;
+    var menu = (Model.EntityFramework.Menu)ViewBag.Menu;
+    ViewBag.Title = system.NameWebsite + " | " + Model.Name;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.MetaKeyword = Model.MetaKeywords;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script src="~/Assets/Client/controllers/ProductController.js"></script>
+}
+<div class="container">
+    <div class="Product_Detail">
+        <div class="alias">
+            <div class="row">
+                <div class="col-md-11">
+                    <a href="/" title="@system.NameWebsite">@system.NameWebsite</a> /
+                    <a href="@menu.Link/@Model.MetaTitle-@(Model.ID).html" title="@Model.Name">@Model.Name</a>
+                </div>
+                <div class="col-md-1">
+                    <span class="pull-right">@Model.ViewCount</span>
+                    <i style="margin-right:5px;margin-top:3px;" class="fa fa-eye pull-right"></i>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="product_content">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>Chương trình tour</h4>
+                    <h3>@Model.Name</h3>
+                    <hr />
+                    <div class="share_socical">
+                        <div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60" data-href="http://www.fb.com/tamnguyen9z"></div>
+                        <div class="fb-like" data-href="@menu.Link/@Model.MetaTitle-@Model.ID" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                        <!-- Place this tag after the last share tag. -->
+                        <script type="text/javascript">
+                            (function () {
+                                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                                po.src = 'https://apis.google.com/js/platform.js';
+                                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                            })();
+                        </script>
+                    </div>
+                    <hr />
+                    <input hidden="hidden" id="ProductID" value="@Model.ID" />
+                    <div id="carousel_product_images" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators"></ol>
+                        <div class="carousel-inner"></div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Mã tour : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@(Model.Code != null ? Model.Code : "Đang cập nhật")</b></p>
+                            <p>Thời gian : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@(Model.Duration > 0 ? Model.Duration.ToString() : "Đang cập nhật")</p>
+                            <p>Khởi hành : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@(Model.Departure != null ? Convert.ToDateTime(Model.Departure).ToShortDateString() : "Đang cập nhật")</b></p>
+                            <p>Nơi khởi hành : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>@(Model.PlaceofDeparture != null ? Model.PlaceofDeparture.ToString() : "Đang cập nhật")</b></p>
+                            <p>Số chỗ còn nhận : &nbsp;&nbsp;&nbsp;<font color="red">@(Model.Quantity > 0 ? Model.Quantity.ToString() : "Đã hết chỗ")</font></p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box_price text-center clearfix">
+                                <s>@(Model.PromotionPrice != null ? String.Format("{0:C}", Model.Price) : "")</s> <br />
+                                <span class="price_detail">@(Model.PromotionPrice != null ? String.Format("{0:C}", Model.PromotionPrice) : String.Format("{0:C}", Model.Price))</span>
+                                <hr />
+                                <a href="/booking/@Model.MetaTitle-@(Model.ID).html" class="btn btn-primary">Đặt ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    @Html.Raw(Model.Description)
+                    <hr />
+                    <div class="service text-center clearfix">
+                        <div class="col-md-2">
+                            <i class="fa fa-umbrella"></i>
+                            <br />
+                            Bảo hiểm
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-cutlery"></i>
+                            <br />
+                            Bữa ăn theo chương trình
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-user"></i>
+                            <br />
+                            Hướng dẫn viên
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-ticket"></i>
+                            <br />
+                            Vé tham quan
+                        </div>
+                        <div class="col-md-2">
+                            <i class="fa fa-bus"></i>
+                            <br />
+                            Xe đưa đón
+                        </div>
+                    </div>
+                    <hr />
+                    <div role="tabpanel" class="animate-box">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Lịch trình</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#Note" aria-controls="tab" role="tab" data-toggle="tab">Lưu ý</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#contact" aria-controls="tab" role="tab" data-toggle="tab">Liên hệ</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#more" aria-controls="tab" role="tab" data-toggle="tab">Khác</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                @Html.Raw(Model.Detail)
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="Note">
+                                @Html.Raw(Model.Note != null ? Model.Note : "Đang cập nhật")
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="contact">
+                                <p>Địa chỉ : @(system.Location != "" ? system.Location : "Đang cập nhật")</p>
+                                <p>Số điện thoại : @(system.Phone != "" ? system.Phone : "Đang cập nhật")</p>
+                                <p>Email hỗ trợ : @(system.EmailNotification != "" ? system.EmailNotification : "Đang cập nhật")</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="more">
+                                <p>Đang cập nhật</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <h3>Tags</h3>
+                    @if (listTag.Count > 0)
+                    {
+                        foreach (var item in listTag)
+                        {
+                            <a href="/hashtag/@item.TagID" style="margin-left:6px;" class="label @(Travel.Common.Tool.Random_Label_Tag())">@item.Name</a>
+                        }
+                    }
+                    else
+                    {
+                        <p>Đang cập nhật</p>
+                    }
+                    <hr />
+                    <div class="comment">
+                        <h3>Bình luận</h3>
+                        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="5"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

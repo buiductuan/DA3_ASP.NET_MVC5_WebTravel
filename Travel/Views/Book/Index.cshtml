@@ -1,0 +1,225 @@
+﻿@model Model.EntityFramework.Order
+@{
+    var system = (Model.EntityFramework.SystemConfig)ViewBag.System;
+    var pr = (Model.EntityFramework.Product)ViewBag.Product;
+    ViewBag.Title = system.NameWebsite + " | Đặt tour | " + pr.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script src="~/Assets/Client/controllers/BookController.js"></script>
+}
+<div class="container">
+    @using (Html.BeginForm("Create", "Order", FormMethod.Post))
+    {
+        <div id="booking_tour">
+            <div class="alias">
+                <h3>Đặt tour</h3>
+                <a href="~/Assets/Client/pdf/quytrinhbooktour.pdf" class="btn btn-default" target="_blank"> <i class="fa fa-download"></i> Quy trình đặt tour</a>
+            </div>
+            <hr />
+            <input type="text" id="ProductID" value="@pr.ID" hidden="hidden"/>
+            <div style="height:1500px;" class="booking_detail clearfix">
+                <!-- multistep form -->
+                <div id="msform">
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active">Nhập thông tin</li>
+                        <li>TravelHappy xác nhận</li>
+                        <li>Thanh toán</li>
+                    </ul>
+                    <!-- fieldsets -->
+                    <fieldset style="text-align:left">
+                        <h3><a href="#" data-toggle="modal" data-target="#modal_ShowNote">@pr.Name</a></h3>
+                        <h3 class="fs-subtitle">Mã tour : <b>@(pr.Code != null ? pr.Code : "Đang cập nhật")</b></h3>
+                        <h3 class="fs-subtitle">Thời gian : <b>@(pr.Duration > 0 ? pr.Duration.ToString() : "Đang cập nhật") ngày</b></h3>
+                        <h3 class="fs-subtitle">Giá : <b>@(pr.PromotionPrice != null ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></h3>
+                        <h3 class="fs-subtitle">Ngày khởi hành : <b>@(pr.Departure != null ? pr.Departure.ToShortDateString() : "Đang cập nhật")</b></h3>
+                        <h3 class="fs-subtitle">Nơi khởi hành : <b>@(pr.PlaceofDeparture != null ? pr.PlaceofDeparture : "Đang cập nhật")</b></h3>
+                        <h3 class="fs-subtitle">Số chỗ còn nhận : <b>@(pr.Quantity > 0 ? pr.Quantity.ToString() : "Đã hết chỗ")</b></h3>
+                        <p class="text-danger">Khách nữ từ 55 tuổi trở lên, khách nam từ 60 tuổi trở lên đi tour một mình và khách mang thai trên 4 tháng (16 tuần) vui lòng đăng ký tour trực tiếp tại văn phòng của Vietravel.</p>
+                        <hr />
+                        <h4>Giá tour cơ bản</h4>
+                        <table class="table">
+                            <thead>
+                            <th>Loại khách</th>
+                            <th>Việt Nam</th>
+                            <th>Việt Kiều</th>
+                            <th>Nước ngoài</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Người lớn (Từ 12 tuổi trở lên)</td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Trẻ em (Từ 11 đến 12 tuổi)</td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Trẻ nhỏ (Từ 5 đển dưới 11 tuổi)</td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", ((double)pr.PromotionPrice - ((double)pr.PromotionPrice * 0.01))) : String.Format("{0:C}", ((double)pr.Price - ((double)pr.Price * 0.01))))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", ((double)pr.PromotionPrice - ((double)pr.PromotionPrice * 0.01))) : String.Format("{0:C}", ((double)pr.Price - ((double)pr.Price * 0.01))))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", ((double)pr.PromotionPrice - ((double)pr.PromotionPrice * 0.01))) : String.Format("{0:C}", ((double)pr.Price - ((double)pr.Price * 0.01))))</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Em bé (Dưới 5 tuổi)</td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", ((double)pr.PromotionPrice - ((double)pr.PromotionPrice * 0.2))) : String.Format("{0:C}", ((double)pr.Price - ((double)pr.Price * 0.2))))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", ((double)pr.PromotionPrice - ((double)pr.PromotionPrice * 0.2))) : String.Format("{0:C}", ((double)pr.Price - ((double)pr.Price * 0.2))))</b></td>
+                                    <td><b style="color:#ee5858">@(pr.PromotionPrice > 0 ? String.Format("{0:C}", ((double)pr.PromotionPrice - ((double)pr.PromotionPrice * 0.2))) : String.Format("{0:C}", ((double)pr.Price - ((double)pr.Price * 0.2))))</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <h4>Thông tin liên lạc</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="error_NameCustomer_Booking">Họ và tên <font color="#ee5858">(*)</font></label>
+                                    @Html.TextBoxFor(model => model.NameCustomer, new { @class="form-control",@placeholder="Họ và tên"})
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="error_Email_Booking">Email <font color="#ee5858">(*)</font></label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="error_Address_Booking">Địa chỉ <font color="#ee5858">(*)</font></label>
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="error_Phone_Booking">Số điện thoại <font color="#ee5858">(*)</font></label>
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Số điện thoại" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label>Ghi chú</label>
+                                @Html.TextAreaFor(model => model.Note, new { @class = "form-control", @placeholder = "Ghi chú" })
+                            </div>
+                        </div>
+                        <hr />
+                        @*<div class="row">
+                            <div class="col-md-2">
+                                <label>Người lớn</label>
+                                <input type="number" value="1" id="adult_amount" />
+                            </div>
+                            <div class="col-md-1">
+                                <label>Trẻ em</label>
+                                <input type="number" value="0" id="children_amount" />
+                            </div>
+                            <div class="col-md-1">
+                                <label>Trẻ nhỏ</label>
+                                <input type="number" value="0" id="kid_amount" />
+                            </div>
+                            <div class="col-md-1">
+                                <label>Em bé</label>
+                                <input type="number" value="0" id="baby_amount" />
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <label>Tổng</label>
+                                <input type="number" id="total" value="1" readonly="readonly" />
+                            </div>
+                        </div>
+                        <hr />
+                        <h4>Danh sách khách hàng</h4>
+                        <table class="table">
+                            <thead>
+                            <th>STT</th>
+                            <th>Họ tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Địa chỉ</th>
+                            <th>Giới tính</th>
+                            <th>Loại khách</th>
+                            <th>Độ tuổi</th>
+                            <th>Trị giá</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <input style="padding:5px" type="text" placeholder="Họ tên" />
+                                    </td>
+                                    <td>
+                                        <input style="padding:5px" type="text" placeholder="Ngày sinh" />
+                                    </td>
+                                    <td>
+                                        <input style="padding:5px" type="text" placeholder="Địa chỉ" />
+                                    </td>
+                                    <td>
+                                        <select style="font-size:12px;">
+                                            <option>Nam</option>
+                                            <option>Nữ</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select style="font-size:12px;">
+                                            <option>Việt Nam</option>
+                                            <option>Việt kiều</option>
+                                            <option>Nước ngoài</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select style="font-size:12px;">
+                                            <option>Người lớn</option>
+                                            <option>Trẻ em</option>
+                                            <option>Trẻ nhỏ</option>
+                                            <option>Em bé</option>
+                                        </select>
+                                    </td>
+                                    <td class="text-danger"><b>@(pr.PromotionPrice != null ? String.Format("{0:C}", pr.PromotionPrice) : String.Format("{0:C}", pr.Price))</b></td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+                        <input type="button" name="next"  class="action-button btn-save" value="Đặt tour"/>
+                    </fieldset>
+                    <fieldset>
+                        <h2 class="fs-title">Social Profiles</h2>
+                        <h3 class="fs-subtitle">Your presence on the social network</h3>
+                        <input type="text" name="twitter" placeholder="Twitter" />
+                        <input type="text" name="facebook" placeholder="Facebook" />
+                        <input type="text" name="gplus" placeholder="Google Plus" />
+                        <input type="button" name="previous" class="previous action-button" value="Previous" />
+                        <input type="button" name="next" class="next action-button" value="Next" />
+                    </fieldset>
+                    <fieldset>
+                        <h2 class="fs-title">Personal Details</h2>
+                        <h3 class="fs-subtitle">We will never sell it</h3>
+                        <input type="text" name="fname" placeholder="First Name" />
+                        <input type="text" name="lname" placeholder="Last Name" />
+                        <input type="text" name="phone" placeholder="Phone" />
+                        <textarea name="address" placeholder="Address"></textarea>
+                        <input type="button" name="previous" class="previous action-button" value="Previous" />
+                        <input type="submit" name="submit" class="submit action-button" value="Submit" />
+                    </fieldset>
+                </div>
+                @*Modal*@
+                <div class="modal fade" id="modal_ShowNote">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4>Lưu ý</h4>
+                            </div>
+                            <div class="modal-body">
+                                <textarea class="form-control" rows="10">@Html.Raw(pr.Note != null ? pr.Note : "Đang cập nhật")</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

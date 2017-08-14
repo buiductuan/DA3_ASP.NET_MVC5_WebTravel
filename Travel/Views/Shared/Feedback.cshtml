@@ -1,0 +1,27 @@
+﻿@{ 
+    var feedback = (IEnumerable<Model.EntityFramework.FeedBack>)ViewBag.FeedBack;
+    var theme = (Model.EntityFramework.Theme)ViewBag.Theme;
+}
+<div class="container">
+    <div class="row animate-box">
+        <div class="col-md-8 col-md-offset-2 text-center travel-heading">
+            <h2>@theme.Feedback_Title</h2>
+            <p style="color:#fff">@theme.Feedback_Description</p>
+        </div>
+    </div>
+    <div class="row">
+       @foreach (var item in feedback)
+       {
+        <div class="col-md-4">
+            <div class="box-testimony animate-box">
+                <blockquote>
+                    <span class="quote"><span><i class="icon-quotes-right"></i></span></span>
+                    <p>&ldquo;@item.Content&rdquo;</p>
+                </blockquote>
+                <p class="author">@item.Name</p>
+            </div>
+
+        </div>
+       }
+    </div>
+</div>

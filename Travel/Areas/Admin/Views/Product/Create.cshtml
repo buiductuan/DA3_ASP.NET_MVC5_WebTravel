@@ -1,0 +1,242 @@
+﻿@model Model.EntityFramework.Product
+@{
+    ViewBag.Title = "TravelHappy | Thêm sản phẩm";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Thêm mới sản phẩm
+}
+@section header_a{
+    Thêm mới sản phẩm
+}
+@section jsFooter{
+    <script>
+        $(function () {
+            var editor = CKEDITOR.replace("txtDetail", {
+                customConfig: '/Assets/Admin/plugins/ckeditor/config.js'
+            });
+            var editor = CKEDITOR.replace("txtNote");
+        });
+    </script>
+    <script src="~/Assets/Admin/controllers/ProductController.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#image_preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageAvatar").change(function () {
+            readURL(this);
+        });
+    </script>
+}
+<div class="container">
+    @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        //Content Product
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Thông tin sản phẩm</h4>
+                <p class="text-muted">Cung cấp thông tin về tên, mô tả loại sản phẩm và nhà sản xuất để phân loại sản phẩm này.</p>
+                <div class="col-md-10">
+                    <div class="file-field">
+                        <label class="text-muted">Chọn ảnh đại diện</label>
+                        <img class="img-responsive" width="100" src="~/images/images/Products/none.png" id="image_preview" />
+                        <input type="file" name="file" id="imageAvatar" accept="image/x-png,image/jpeg" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-save margin">Lưu</button>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @Html.ValidationSummary(false, "", new { @class = "error_custom" })
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label id="error_NameProduct">Tên sản phẩm <small class="text-danger">*</small> &nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger pull-right" })</label>
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Nhập tên sản phẩm" })
+                        </div>
+                        <div class="form-group">
+                            <label id="error_DescriptionProduct">Mô tả <small class="text-danger">*</small>&nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger pull-right" })</label>
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Nhập mô tả sản phẩm" })
+                        </div>
+                        <div class="form-group">
+                            <label id="error_DetailProduct">Nội dung <small class="text-danger">*</small>&nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger pull-right" })</label>
+                            @Html.TextAreaFor(model => model.Detail, new { @class = "form-control", @placeholder = "Nhập nội dung sản phẩm", @id = "txtDetail" })
+                        </div>
+                        <a href="#" class="btn_show_note">Thêm lưu ý</a>
+                        <div class="form-group form_note">
+                            <label id="error_NoteProduct">Lưu ý <small class="text-danger">*</small>&nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger pull-right" })</label>
+                            @Html.TextAreaFor(model => model.Note, new { @class = "form-control", @placeholder = "Nhập nội dung sản phẩm", @id = "txtNote" })
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label id="error_DurationProduct">Số ngày <small class="text-danger">*</small>&nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger pull-right" }) </label>
+                                    @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", @placeholder = "Nhập số ngày", @type = "number" })
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label id="error_DepartureProduct">Ngày khởi hành <small class="text-danger">*</small>&nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Departure, "", new { @class = "text-danger pull-right" }) </label>
+                                    @Html.TextBoxFor(model => model.Departure, new { @class = "form-control", @placeholder = "Ngày khởi hành", @type = "date" })
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label id="error_QuantityProduct">Số người<small class="text-danger">*</small> </label>
+                                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @placeholder = "Nhập số người", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label id="error_PlaceofDepartureProduct">Địa điểm khởi hành <small class="text-danger">*</small> </label>
+                                    @Html.TextBoxFor(model => model.PlaceofDeparture, new { @class = "form-control", @placeholder = "Địa điểm khởi hành" })
+                                    @Html.ValidationMessageFor(model => model.PlaceofDeparture, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="error_CategoryProduct">Loại sản phẩm</label>
+                                    @Html.DropDownListFor(model => model.CategoryID, null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label id="error_CodeProduct">Mã code <small class="text-danger">*</small> </label>
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = "Mã code", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        // End Content product
+
+        //Set price
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Quản lý giá và tùy chọn</h4>
+                <p class="text-muted">Bạn có thể cấu hình nhiều phiên bản và quản lý giá cho từng loại của sản phẩm này</p>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-heading">
+                    <div class="panel-body">
+                        <h4><b>Đặt giá</b></h4>
+                        <div class="form-group clearfix">
+                            <label class="text-muted" id="error_PriceProduct">Giá</label><small class="text-danger pull-right">*</small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                            <div class="input-group">
+                                <span class="input-group-addon">₫</span>
+                                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = "Đặt giá cho sản phẩm" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        // End Set price
+
+        // set tags
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Tags</h4>
+                <p class="text-muted">Tag có thể được dùng để phân loại các sản phẩm.</p>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-body">
+                    <div class="form-group">
+                        <label>Tags</label><small class="pull-right"><font color="#ee5858">(*) Mỗi tag cách nhau 1 dấu phẩy</font></small>
+                        @Html.TextBoxFor(model => model.Tags, new { @class = "form-control", @placeholder = "Nhập tag" })
+                    </div>
+                    <br />
+                    <p>Bạn có thể chọn những tag đã được sử dụng</p>
+                </div>
+            </div>
+        </div>
+        // end set tags
+
+        //set SEO
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Tối ưu SEO</h4>
+                <p class="text-muted">Thiết lập tiêu đề trang, thẻ mô tả, đường dẫn. Những thông tin này xác định cách bài viết xuất hiện trên công cụ tìm kiếm.</p>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group clearfix">
+                            <label id="error_MetaTitleProduct">Thẻ tiêu đề</label><small class="text-danger pull-right">(*)Nên đặt theo tên của sản phẩm</small>
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.MetaTitle, new { @class = "form-control" })
+                                <span class="input-group-btn">
+                                    <a href="#" class="btn btn-default btn_getTitle">Lấy tên</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Thẻ mô tả</label>
+                            @Html.TextAreaFor(model => model.MetaDescription, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        //end set SEO
+
+        //set status
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Trạng thái</h4>
+                <p class="text-muted">Cho phép thiết lập thời gian sản phẩm được hiển thị.</p>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @Html.CheckBoxFor(model => model.Status, new { @checked = "checked" }) <label> Trạng thái</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        // end set status
+
+        //set more
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Thiết lập khác</h4>
+                <p class="text-muted">Cho phép thiết lập các thuộc tính khác của sản phẩm</p>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @Html.CheckBoxFor(model => model.ShowOnHome) <label> Hiển thị trên trang chủ</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row clearfix">
+            <div class="col-md-11">
+                <button type="submit" class="btn btn-primary pull-right btn-save">Lưu</button>
+            </div>
+        </div>
+        // end set more
+    }
+</div>

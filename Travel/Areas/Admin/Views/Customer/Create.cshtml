@@ -1,0 +1,52 @@
+﻿@model Model.EntityFramework.Customer
+@{
+    ViewBag.Title = "TravelHappy | Thêm khách hàng";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Thêm mới khách hàng
+}
+@section header_a{
+    Thêm mới khách hàng
+}
+@section jsFooter{
+
+    <script>
+        $(function () {
+            var editor = CKEDITOR.replace("txtDetail", {
+                customConfig: '/Assets/Admin/plugins/ckeditor/config.js'
+            });
+            var editor = CKEDITOR.replace("txtNote");
+        });
+    </script>
+    <script src="~/Assets/Admin/controllers/CustomerController.js"></script>
+}
+<div class="container">
+    @using (Html.BeginForm("Create", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        //Content Customer
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Thông tin khách hàng</h4>
+                <p class="text-muted">Các thông tin cơ bản về khách hàng.</p>
+                <label class="text-muted">Chọn ảnh đại diện</label>
+                <input type="file" name="file" accept="image/x-png,image/jpeg" />
+                <br />
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @Html.ValidationSummary(false, "", new { @class = "error_custom" })
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        // End Content Customer
+
+    }
+</div>

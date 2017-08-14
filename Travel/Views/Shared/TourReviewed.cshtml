@@ -1,0 +1,22 @@
+﻿@{ 
+    var tour_reviewed = (List<Travel.Common.TourReviewed>)Session[Travel.Common.CommonConstants.TOUR_REVIEWED_SESSION];
+}
+@if (tour_reviewed != null)
+{
+    <div class="tour_reviewed" id="tour_reviewed">
+        <p><i class="fa fa-list"></i> Tour đã xem</p>
+        <table class="table">
+            <tbody>
+                @for (int i = tour_reviewed.Count - 1; i >= 0; i--)
+                {
+                    <tr>
+                        <td>
+                            <a href="@tour_reviewed[i].menu/@tour_reviewed[i].MetaTile-@(tour_reviewed[i].ID).html" title="@tour_reviewed[i].Name">@(tour_reviewed[i].Name.Substring(0, 25)) ...</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

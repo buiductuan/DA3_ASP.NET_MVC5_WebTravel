@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.Discount>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "TravelHappy | Quản lý khuyến mãi";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    <i class="fa fa-bullhorn"></i>&nbsp;Quản lý khuyến mãi
+}
+@section header_a{
+    Quản lý khuyến mãi
+}
+@section jsFooter{
+<script src="~/Assets/Admin/controllers/DiscountController.js"></script>
+    }
+@if (Model.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11">
+                <a href="/Admin/Discount/Create" class="btn btn-primary pull-right">Thêm khuyến mãi</a>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group clearfix">
+                        <div class="row">
+                            <div class="col-md-11">
+                                @using (Html.BeginForm("Index", "Discount", FormMethod.Get))
+                                {
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="@ViewBag.QuerySearch" name="q" placeholder="Nhập từ khóa tìm kiếm ...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">Tìm kiếm</button>
+                                    </span>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <table class="table">
+                        <thead>
+                        <th>Chi tiết</th>
+                        <th>Số lần sử dụng</th>
+                        <th>Thời gian bắt đầu/kết thúc</th>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr class="row_@item.ID">
+                                <td>
+                                    <a href="/Admin/Discount/Update/@item.ID"> @item.ID</a> <br />
+                                    Giảm <b class="text-danger">@(String.Format("{0:c}", item.Disprice))</b>
+                                </td>
+                                <td>
+                                    0/@(item.Amount ==0 ? "∞" : @item.Amount.ToString())
+                                </td>
+                                <td>
+                                    <i class="text-muted">Bắt đầu : </i>@Convert.ToDateTime(item.DayStart).ToShortDateString() <br />
+                                    <i class="text-muted">Kết thúc : </i>@(Convert.ToDateTime(item.DayEnd).ToShortDateString() =="01/01/0001" ? "Không giới hạn" : Convert.ToDateTime(item.DayEnd).ToShortDateString() )
+                                </td>
+                                <td>
+                                    <a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<label class=\"label label-success btn-lg\">Ngừng </label>" : "<label class=\"label label-danger btn-lg\">Tiếp tục</label>")</a>
+                                    |
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                               {
+                                   Confirm = "Bạn có muốn xóa khuyến mại : " + item.ID + " không ?",
+                                   OnComplete = "$('.row_" + item.ID + "').remove()",
+                                   HttpMethod = "Delete"
+                               })
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, q = ViewBag.QuerySearch }))
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container text-center">
+        <h1>Website của bạn chưa có mã khuyến mãi nào</h1>
+        <h4 class="text-muted">Mã khuyến mãi được sử dụng cho các giao dịch đối với khách hàng của bạn</h4>
+        <img class="img-responsive center-block" src="~/images/images/Admin/discount_blank.svg" />
+        <br />
+        <a href="/Admin/Discount/Create" class="btn btn-primary btn-lg"> Thêm mã khuyến mãi đầu tiên của bạn tại đây</a>
+    </div>
+}

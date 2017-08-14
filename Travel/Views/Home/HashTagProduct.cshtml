@@ -1,0 +1,31 @@
+﻿@model List<Model.EntityFramework.Product>
+@{
+    ViewBag.Title = "TravelHappy | "+ViewBag.TagID;
+    var menu = (Model.EntityFramework.Menu)ViewBag.Menu;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="hash-tags">
+        <h3>Tags</h3>
+        <label class="label label-primary">@ViewBag.TagID</label>
+        <hr />
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 travel-tours animate-box fadeInUp animated" data-animate-effect="fadeIn">
+                <div class="travel-overlay"></div>
+                <div class="clearfix">
+                    <a href="@menu.Link/@item.MetaTitle-@(item.ID).html" title="@item.Name">
+                        <img src="~/images/images/Products/@item.Image" alt="@item.Name" class="img-responsive">
+                        <div class="desc">
+                            <h3>@(item.Name.Substring(0, 17))</h3>
+                            <s class="pull-right price_promotion">@(item.PromotionPrice != null ? String.Format("{0:C}", item.Price) : "" )</s><br />
+                            <span class="price">@(item.PromotionPrice != null ? String.Format("{0:C}", item.PromotionPrice) : String.Format("{0:C}", item.Price) )</span>
+                            <a href="/booking/@item.MetaTitle-@(item.ID).html" class="btn btn-primary btn-outline">Đặt ngay <i class="icon-arrow-right22"></i></a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

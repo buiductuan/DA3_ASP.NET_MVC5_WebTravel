@@ -1,0 +1,124 @@
+﻿@model Model.EntityFramework.Discount
+@{
+    var system = (Model.EntityFramework.SystemConfig)ViewBag.System;
+    ViewBag.Title = "TravelHappy | Thêm mã khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Thêm mã khuyến mãi
+}
+@section header_a{
+    Thêm mã khuyến mãi
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/controllers/DiscountController.js"></script>
+}
+<div class="container">
+    @using (Html.BeginForm("Create", "Discount", FormMethod.Post))
+    {
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Chi tiết khuyến mãi</h3>
+            <p class="text-muted">Tạo mã khuyến mãi và ghi rõ số lần sử dụng.</p>
+            <a class="btn btn-default btn_auto_code">Tạo mã tự động</a>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @Html.ValidationSummary(false, "", new { @class = "error_custom" })
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label id="error_ID_Discount">Tạo mã khuyến mãi</label>
+                        @Html.TextBoxFor(model => model.ID, new { @class = "form-control", @placeholder = "Bạn có thể nhập mã khuyến mãi hoặc tạo mã tự động" })
+                    </div>
+                    <div class="form-group">
+                        <label id="error_Amount_Discount">Nhập số lần sử dụng của mã khuyến mãi?</label> <br />
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", @disabled = "disabled" })
+                                <span class="input-group-addon" id="basic-addon2">
+                                    <input type="checkbox" id="Check_amount_discount" checked="checked" /> Không giới hạn
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Loại khuyến mãi</h3>
+            <p class="text-muted">Chọn loại khuyến mãi và những điều kiện đi kèm.</p>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select id="select_condition" class="form-control">
+                                <option value="vnd">VND</option>
+                                <option value="percent">% Giảm</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3" id="discount_price">
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.Disprice, new { @class = "form-control", @type = "number" ,@value="0" })
+                                <span class="input-group-addon">₫</span>
+                            </div>
+                        </div>
+                        <div hidden="hidden" class="col-md-3" id="discount_percent">
+                            <div hidden="hidden" class="input-group">
+                                @Html.TextBoxFor(model => model.Dispercent, new { @class = "form-control", @type = "number",@value ="0", @disabled = "disabled" })
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.ProductCategoryID, null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Thời gian áp dụng</h3>
+            <p class="text-muted">Chọn thời gian bắt đầu, kết thúc của khuyến mãi.</p>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Bắt đầu khuyến mãi</label>
+                                @Html.TextBoxFor(model => model.DayStart, new { @class = "form-control", @type = "datetime", @placeholder = "dd/MM/yyyy" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Bắt đầu khuyến mãi</label>
+                               <div class="input-group">
+                                   @Html.TextBoxFor(model => model.DayEnd, new { @class = "form-control", @type = "datetime",@disabled="disabled"})
+                                   <span class="input-group-addon">
+                                       <input type="checkbox" id="check_time-expired" checked="checked" /> 
+                                       Không bao giờ hết hạn
+                                   </span>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="col-md-11">
+        <button type="submit" class="btn btn-primary pull-right btn-save">Lưu</button>
+    </div>
+    }
+</div>

@@ -1,0 +1,126 @@
+﻿@{ 
+    var newsFeed = (int)ViewBag.newsFeedback;
+    ViewBag.UserImage = ViewBag.ImageUser_Session;
+    ViewBag.NameUser = ViewBag.Name_Session;
+    ViewBag.UserID = ViewBag.ID_Session;
+}
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar" style="height: auto;">
+        <!-- Sidebar user panel -->
+        
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="~/images/images/User/@ViewBag.ImageUser_Session" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p><a style="color:#ffffff" href="/Admin/User/ProfileUser/@ViewBag.UserID">@ViewBag.NameUser</a></p>
+                    <a href="/Admin/User/ProfileUser/@ViewBag.UserID"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input name="q" class="form-control" placeholder="Search..." type="text">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">Trang chủ</li>
+            <li class="active">
+                <a href="/Admin/Home">
+                    <i class="fa fa-dashboard"></i>
+                    <span>@(StaticResource.Resource.SideBar_Home)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Order">
+                    <i class="fa fa-files-o"></i>
+                    <span>@(StaticResource.Resource.SideBar_Order)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Product">
+                    <i class="fa fa-th"></i> <span>@(StaticResource.Resource.SideBar_Product)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/ProductCategory">
+                    <i class="fa fa-tags"></i>
+                    <span>@(StaticResource.Resource.SideBar_ProductCategory)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Customer">
+                    <i class="fa fa-users"></i>
+                    <span>@(StaticResource.Resource.SideBar_Customer)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Discount">
+                    <i class="fa fa-edit"></i> <span>@(StaticResource.Resource.SideBar_Discount)</span>
+                </a>
+            </li>
+            <li class="header">@(StaticResource.Resource.SideBar_Label_Content)</li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-file-text"></i> <span>@(StaticResource.Resource.SideBar_Page)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/NewsCategory">
+                    <i class="fa fa-tags"></i> <span>@(StaticResource.Resource.SideBar_BlogCategory)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Newsletter">
+                    <i class="fa fa-comment"></i> <span>@(StaticResource.Resource.SideBar_Blog)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Menu">
+                    <i class="fa fa-sitemap"></i> <span>@(StaticResource.Resource.SideBar_Menu)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Theme">
+                    <i class="fa fa-tv"></i> <span>@(StaticResource.Resource.SideBar_Theme)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/File">
+                    <i class="fa fa-file-o"></i> <span>@(StaticResource.Resource.SideBar_File)</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/Feedback">
+                    <i class="fa fa-mail-reply"></i> <span>@(StaticResource.Resource.SideBar_Feedback)</span>
+                    <span class="label label-primary pull-right">@(newsFeed > 0 ? newsFeed.ToString() : "")</span>
+                </a>
+            </li>
+            <li class="header">@(StaticResource.Resource.SileBar_Label_Configuration)</li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cogs"></i>
+                    <span>@(StaticResource.Resource.SideBar_Setting)</span>
+                    <i class="fa fa-angle-down pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/Admin/Setting"><i class="fa fa-cog"></i> @(StaticResource.Resource.SideBar_SettingGlobal)</a></li>
+                    <li><a href="/Admin/Notification"><i class="fa fa-rss"></i> @(StaticResource.Resource.SideBar_Notification)</a></li>
+                    <li><a href="/Admin/Pay"><i class="fa fa-shopping-cart"></i> @(StaticResource.Resource.SideBar_Pay)</a></li>
+                    <li><a href="/Admin/Domain"><i class="fa fa-globe"></i> @(StaticResource.Resource.SideBar_Domain)</a></li>
+                    <li>
+                        <a href="/Admin/User"><i class="fa fa-user"></i> @(StaticResource.Resource.SideBar_Account)</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+

@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.User>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "TravelHappy | Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Quản lý tài khoản
+}
+
+@section header_a {
+    Quản lý tài khoản
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Nhân viên quản trị</h3>
+            <p>Bạn có thể cấp quyền quản lý website cho người khác.</p>
+            <a href="User/Create" class="btn btn-primary">Thêm mới</a>
+            <hr />
+            <p>Bạn có thể đăng xuất các nhân viên quản trị khỏi website cửa hàng của bạn.</p>
+            <button class="btn btn-primary">Chấm dứt các phiên đăng nhập</button>
+            <hr />
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                        <th></th>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Quyền truy cập</th>
+                        <th>Đăng nhập cuối</th>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row_@item.ID">
+                                    <td>
+                                        <img class="img-responsive center-block img-circle" width="60" src="~/images/images/User/@item.Image" />
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/User/Update/@item.ID">
+                                            @item.Name
+                                        </a>
+                                    </td>
+                                    <td>@item.Email</td>
+                                    <td>Nhân viên</td>
+                                    <td>@item.TimeActive</td>
+                                    <td>
+                                        @Ajax.ActionLink("Xóa", "Delete", new
+                                   { @id = item.ID }, new AjaxOptions
+                                   {
+                                       Confirm = "Bạn có muốn xóa nhân viên " + item.Name + " không ?",
+                                       OnComplete = "$('#row_" + item.ID + "').remove()",
+                                       HttpMethod = "Delete"
+                                   })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

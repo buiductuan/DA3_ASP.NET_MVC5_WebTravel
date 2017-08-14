@@ -1,0 +1,77 @@
+﻿@{
+    var theme = (Model.EntityFramework.Theme)ViewBag.Theme;
+}
+<div class="travel-cover" data-stellar-background-ratio="0.5" style="background-image: url(/images/images/Slides/@theme.Header_image);">
+    <div class="desc">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-md-5">
+                    @using (Html.BeginRouteForm("SearchProduct", FormMethod.Get))
+                    {
+                        <div class="tabulation animate-box">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#flights" aria-controls="flights" role="tab" data-toggle="tab">Tìm kiếm</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#hotels" aria-controls="hotels" role="tab" data-toggle="tab">Booking</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="flights">
+                                    <div class="row">
+                                        <div class="col-xxs-12 col-xs-12 mt">
+                                            <div class="input-field">
+                                                <label for="from">Nơi khởi hành</label>
+                                                @Html.DropDownList("place", null, new { @class = "cs-select cs-skin-border" })
+                                            </div>
+                                        </div>
+                                        <div class="col-xxs-12 col-xs-6 mt alternate">
+                                            <div class="input-field">
+                                                <label for="from">Loại tour</label>
+                                                @Html.DropDownList("pid", null, new { @class = "cs-select cs-skin-border" })
+                                            </div>
+                                        </div>
+                                        <div class="col-xxs-12 col-xs-6 mt alternate">
+                                            <div class="input-field">
+                                                <label for="date-start">Ngày khởi hành</label>
+                                                @Html.TextBox("date_start",null, new {@class="form-control", @id = "date-start", @placeholder = "dd/mm/yyyy" })
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <input type="submit" class="btn btn-primary btn-block" value="Tìm kiếm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="hotels">
+                                    <div class="row">
+                                        <div class="col-xxs-12 col-xs-12 mt">
+                                            <div class="input-field">
+                                                <label for="from">Mã booking :</label>
+                                                <input type="text" class="form-control" id="from-place"/>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="col-xs-12">
+                                            <input type="submit" class="btn btn-primary btn-block btn-search" value="Tra booking">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="desc2 animate-box">
+                    <div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
+                        <h3>@theme.Header_Description</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

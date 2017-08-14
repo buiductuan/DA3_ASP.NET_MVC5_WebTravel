@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.Newsletter>
+@using PagedList.Mvc
+@{
+    var theme = (Model.EntityFramework.Theme)ViewBag.Theme;
+    var system = (Model.EntityFramework.SystemConfig)ViewBag.System;
+    var chuck = 3;
+    ViewBag.Title = system.NameWebsite + " | Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script>
+        $(".emoij_fb").faceMocion({
+            emociones: [
+                { "emocion": "love", "TextoEmocion": "Love" },
+                { "emocion": "angry", "TextoEmocion": "Angry" },
+                { "emocion": "scare", "TextoEmocion": "Scares" },
+                { "emocion": "enjoy", "TextoEmocion": "Enjoy" },
+                { "emocion": "like", "TextoEmocion": "Like" },
+                { "emocion": "sad", "TextoEmocion": "Sad" },
+                { "emocion": "amazing", "TextoEmocion": "Amazing" },
+                { "emocion": "glad", "TextoEmocion": "Glad" }
+            ]
+        });
+    </script>
+    <script src="~/Assets/Client/controllers/NewsletterController.js"></script>
+}
+<div id="travel-blog-section" class="travel-section-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                <h3>@theme.BLog_Title</h3>
+                <p>@theme.Blog_Description</p>
+            </div>
+        </div>
+    </div>
+    <div class="container clearfix">
+        @for (var i = 0; i < Model.Count; i++)
+            {
+                if (i == 0 || i % 3 == 0)
+                { @Html.Raw("<div class=\"row row-bottom-padded-md clearfix\">")}
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="travel-blog animate-box">
+                        <a href="/tin-tuc/@Model[i].MetaTitle-@(Model[i].ID).html"><img title="@Model[i].Name" class="img-responsive max-height-image" src="~/images/images/Newsletter/@Model[i].Image" alt="@Model[i].MetaTitle"></a>
+                        <div class="blog-text">
+                            <div class="prod-title">
+                                <h3><a href="/tin-tuc/@Model[i].MetaTitle-@(Model[i].ID).html">@(Model[i].Name.ToString().Substring(0, 50) + " ...")</a></h3>
+                                <span class="posted_by">@(Convert.ToDateTime(Model[i].CreatedDate).ToShortDateString())</span>
+                                <span class="comment"><a href="">@Model[i].ViewCount<i class="fa fa-eye"></i></a></span>
+                                <p>@(Model[i].Description.ToString().Substring(0, 70))</p>
+                                <p><a href="/tin-tuc/@Model[i].MetaTitle-@(Model[i].ID).html">Xem thêm ...</a></p>
+                            </div>
+                            <hr />
+                            <div style="font-size:10px;" class="text-muted">
+                                <label>Like : @(Model[i].Like)</label>|
+                                <label>Love : @Model[i].Love</label>|
+                                <label>Enjoy : @Model[i].Enjoy</label>|
+                                <label>Glad : @Model[i].Glad</label>|
+                                <label>Angry : @Model[i].Angry</label>
+                            </div>
+                            <hr />
+                            <input type="hidden" class="emoij_fb" id="btn_emoij" data-id="@Model[i].ID" value="like" />
+                        </div>
+                    </div>
+                </div>
+                if (i % 3 == 2 || i == Model.Count - 1){@Html.Raw("</div>") }
+            }
+        <div class="container text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</div>

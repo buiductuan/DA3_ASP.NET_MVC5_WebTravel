@@ -1,0 +1,104 @@
+﻿@model PagedList.IPagedList<Model.Views.ProductOrder_View>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "TravelHappy | " + StaticResource.Resource.Admin_Order_Title;
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    @(StaticResource.Resource.Admin_Order_Title)
+}
+@section header_a{
+    @(StaticResource.Resource.Admin_Order_Title)
+}
+@section jsFooter{
+    
+}
+@if (Model.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 clearfix">
+                @using (Html.BeginForm("ExportDataToExcel", "Order", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-default pull-left">Xuất dữ liệu</button>
+                }
+                <a href="/Admin/Order/Create" class="btn btn-primary pull-right">Thêm đơn hàng</a>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-11">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-11">
+                                @using (Html.BeginForm("Index", "Order", FormMethod.Get))
+                                {
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="@ViewBag.QuerySearch" name="q" placeholder="Nhập từ khóa tìm kiếm ...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="submit">Tìm kiếm</button>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                <th></th>
+                                <th>Tên sản phẩm</th>
+                                <th>Khách hàng</th>
+                                <th>Ghi chú</th>
+                                <th>Ngày tạo</th>
+                                <th></th>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="row_@item.ID">
+                                            <td>
+                                                <a title="@item.ProductName" href="/Admin/Product/Update/@item.ID">@(item.ProductName.ToString().Substring(0, 25) + " ...")</a>
+                                            </td>
+                                            <td>
+                                                @item.NameCustomer
+                                            </td>
+                                            <td>
+                                                @item.Note
+                                            </td>
+                                            <td>
+                                                @(item.CreateDate.ToShortDateString())
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<label class=\"label label-success\">Đã xem </label>" : "<label class=\"label label-danger\">Chưa xem</label>")</a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn_Delete" data-id="@item.ID"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="container">
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, q = ViewBag.QuerySearch }))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container text-center">
+        <h2>@(StaticResource.Resource.Admin_Order_Title_None)</h2>
+        <p class="text-muted">@(StaticResource.Resource.Admin_Order_Sub_Title_None)</p>
+        <img class="img-responsive center-block" src="~/images/images/Admin/donhang-05.svg" style="margin-top:20px;margin-bottom:20px;" />
+        <a href="/Admin/Order/Create" class="btn btn-primary">@(StaticResource.Resource.Admin_Order_Button)</a>
+    </div>
+}

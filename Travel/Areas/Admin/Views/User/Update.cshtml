@@ -1,0 +1,102 @@
+﻿@model Model.EntityFramework.User
+@{
+    ViewBag.Title = "TravelHappy | Cập nhật tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section header_h1{
+    Cập nhật tài khoản
+}
+
+@section header_a {
+    Cập nhật tài khoản
+}
+
+<div class="container">
+    <div class="row">
+        @using (Html.BeginForm("Update", "User", FormMethod.Post))
+        {
+            <div class="col-md-4">
+                <h3>Thông tin liên quan đến tài khoản</h3>
+                <p>Tất cả thông tin liên quan đến tài khoản</p>
+                <button type="submit" class="btn btn-primary" id="btnSaveUser">Lưu</button>
+                <hr />
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "error_custome pull-right" })
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Họ và tên</label>
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Họ và tên" })
+                                <br />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Email</label>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Địa chỉ</label>
+                                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="file-field">
+                                    <label>Ảnh đại diện</label>
+                                    @Html.TextBoxFor(model => model.Image, new { @placeholder = "Địa chỉ", @type = "file" })
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Số điện thoại</label>
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Số điện thoại" })
+                                <br />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Tên đăng nhập</label>
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Tên đăng nhập", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Mật khẩu</label>
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                                <br />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Nhập lại mật khẩu</label>
+                                <input type="password" class="form-control" id="ResetPassword" placeholder="Nhập lại mật khẩu" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Quyền quản trị</h3>
+            <p>Chọn các phần mà tài khoản này có thể truy cập được.</p>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <input type="checkbox" />
+                    <label>Giới hạn quyền truy cập</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

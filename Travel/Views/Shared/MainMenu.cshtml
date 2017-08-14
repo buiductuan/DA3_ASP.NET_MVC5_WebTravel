@@ -1,0 +1,58 @@
+﻿@model List<Model.EntityFramework.Menu>
+@{
+    var sessionUser = Session[Travel.Common.CommonConstants.CUSTOMER_SESSION];
+    var customerLogin = (Travel.Common.CustomerLogin)sessionUser;
+    var systemconfig = (Model.EntityFramework.SystemConfig)ViewBag.SystemConfig;
+}
+@if (sessionUser == null)
+{
+    <a href="#" class="js-travel-nav-toggle travel-nav-toggle dark"><i></i></a>
+    <h1 id="travel-logo"><a href="/"><i class="icon-airplane"></i>@systemconfig.NameWebsite</a></h1>
+    <!-- START #travel-menu-wrap -->
+    <nav id="travel-menu-wrap" role="navigation">
+        <ul class="sf-menu" id="travel-primary-menu">
+            @foreach (var item in Model)
+            {
+                <li><a href="@(item.Link == "/" ? item.Link : item.Link.ToString()+".html")" target="@item.Target">@item.Text</a></li>
+            }
+            <li class="">
+                <a class="travel-sub-ddown sf-with-ul hover">Khách hàng <i class="fa fa-angle-down"></i></a>
+                <ul class="travel-sub-menu" style="display: none;">
+                    <li><a href="/dang-nhap"><i class="fa fa-user"></i> Đăng nhập</a></li>
+                    <li><a href="/dang-ky.html"><i class="fa fa-user-plus"></i> Đăng ký</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+}
+else
+{
+    <a href="#" class="js-travel-nav-toggle travel-nav-toggle dark"><i></i></a>
+    <h1 id="travel-logo"><a href="/"><i class="icon-airplane"></i>@systemconfig.NameWebsite</a></h1>
+    <!-- START #travel-menu-wrap -->
+    <nav id="travel-menu-wrap" role="navigation">
+        <ul class="sf-menu" id="travel-primary-menu">
+            @foreach (var item in Model)
+            {
+                <li><a href="@(item.Link == "/" ? item.Link : item.Link.ToString()+".html")" target="@item.Target">@item.Text</a></li>
+            }
+            <li class="">
+                <a class="travel-sub-ddown sf-with-ul">
+                    <div class="row hover">
+                        <div class="col-sm-3">
+                            <img width="50" class="img-responsive center-block img-circle" src="@(customerLogin.Image.Contains("https://graph.facebook.com/") == true ? customerLogin.Image : "/images/images/Customers/"+customerLogin.Image ) "   />
+                        </div>
+                        <div class="col-md-6">
+                            <label style="margin-left:5px;margin-top:6px">@customerLogin.Name <i class="fa fa-angle-down"></i></label>
+                        </div>
+                    </div>
+                </a>
+                <ul class="travel-sub-menu" style="display: none;">
+                    <li><a href="/">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/Registration/SignOut">Đăng xuất</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+}

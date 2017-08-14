@@ -1,0 +1,182 @@
+﻿@model Model.EntityFramework.SystemConfig
+@{
+    ViewBag.Title = "TravelHappy | Cấu hình Website";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Cấu hình website
+}
+@section header_a{
+    Cấu hình website
+}
+@section jsFooter{
+    <script>
+        var editor = CKEDITOR.replace('Payment_terms', {
+
+        });
+    </script>
+    @*<script src="~/Assets/Admin/controllers/settingController.js"></script>*@
+}
+<div class="container">
+    @using (Html.BeginForm("Update", "Setting", FormMethod.Post))
+    {
+        <div class="row clearfix">
+            <div class="col-md-11">
+                <button type="submit" id="btn_Save_Setting" class="btn btn-primary pull-right">Lưu</button>
+            </div>
+        </div>
+        <hr />
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Thông tin website
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Tên website</label>
+                        @Html.TextBoxFor(model => model.NameWebsite, new { @class = "form-control", @placeholder = "Tên website" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>Tiêu đề trang chủ</label>
+                        @Html.TextBoxFor(model => model.MetaWebsite, new { @class = "form-control", @placeholder = "Tiêu đề trang chủ" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>Mô tả trang chủ</label>
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Nhập một mô tả để nâng cao xếp hạng trên công cụ tìm kiếm như Google." })
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email quản trị</label>
+                                @Html.TextBoxFor(model => model.EmailManage, new { @class = "form-control", @placeholder = "Email quản trị" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email gửi thông báo</label>
+                                @Html.TextBoxFor(model => model.EmailNotification, new { @class = "form-control", @placeholder = "Email gửi thông báo" })
+                                <br />
+                                <small class="text-muted">Email này được sử dụng để gửi thông báo và nhận liên hệ từ các khách hàng của bạn</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Thông tin liên hệ
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Tên kinh doanh</label>
+                        @Html.TextBoxFor(model => model.NameCompany, new { @class = "form-control", @placeholder = "Nhập tên kinh doanh" })
+                    </div>
+                    <div class="form-group">
+                        <label>Điện thoại</label>
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Nhập số điện thoại" })
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        @Html.TextAreaFor(model => model.Location, new { @class = "form-control", @placeholder = "Nhập địa chỉ" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tỉnh / Thành phố</label>
+                                @Html.TextBoxFor(model => model.Province, new { @class = "form-control", @placeholder = "Nhập Tỉnh / Thành phố" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Quốc gia</label>
+                                @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @placeholder = "Nhập quốc gia" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Tiêu chuẩn & định dạng
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Múi giờ</label>
+                                @Html.TextBoxFor(model => model.Timezone, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tiền tệ</label>
+                                @Html.TextBoxFor(model => model.Currency, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Định dạng mã code</label>
+                    <br />
+                    <small class="text-muted">Mã code mặc định bắt đầu là TVHP1001, bạn có thể thay đổi tiền tố hoặc hậu tố giống như "BN1001" hoặc "1001-AD"</small>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <br />
+                                <label>Tiền tố</label>
+                                @Html.TextBoxFor(model => model.Prefix, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <br />
+                                <label>Hậu tố</label>
+                                @Html.TextBoxFor(model => model.Suffix, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Mã code sẽ được áp dụng là : </small><label id="code_Prefix"></label><label>1001</label><label id="code_Suffix"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b>Mã Google Analytics</b>
+                </div>
+                <div class="panel-body">
+                    @Html.TextAreaFor(model => model.CodeAnalytics, new { @class="form-control",@placeholder="Nhập mã google analytics để nâng cao xếp hạng tìm kiếm website của bạn trên thanh công cụ tìm kiếm google"})
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b>Điều khoản thanh toán</b>
+                </div>
+                <div class="panel-body">
+                    @Html.TextAreaFor(model => model.Payment_terms, new { @class = "form-control",@rows="10", @placeholder = "Nhập điều khoản thanh toán sản phẩm của website của bạn ở đây" })
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-11">
+                <button type="submit" id="btn_Save_Setting" class="btn btn-primary pull-right">Lưu</button>
+            </div>
+        </div>
+
+    }
+</div>

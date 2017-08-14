@@ -1,0 +1,35 @@
+﻿@model Travel.Areas.Admin.Models.LoginModel
+@{
+    ViewBag.Title = "Đăng nhập quản trị hệ thống";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAssets.cshtml";
+}
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/"><img class="img-responsive center-block" src="~/images/images/icon.png" /></a>
+    </div><!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Đăng nhập</p>
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                @Html.ValidationSummary(false, "", new { @class = "error_custom pull-right" })
+            </div>
+            <label id="error_UserName" class="text-bold">Tên đăng nhập</label>
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Tên đăng nhập", @autofocus = "autofocus" })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <label id="error_Password" class="text-bold">Mật khẩu</label>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat pull-right">Đăng nhập</button>
+                </div><!-- /.col -->
+            </div>
+        }
+    </div><!-- /.login-box-body -->
+</div><!-- /.login-box -->

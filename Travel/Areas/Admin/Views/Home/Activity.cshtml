@@ -1,0 +1,39 @@
+﻿@model PagedList.IPagedList<Model.EntityFramework.Log_Admin>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "TravelHappy | Activity";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    Danh sách hoạt động
+}
+@section header_a{
+    Danh sách hoạt động
+}
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+          @foreach (var item in Model)
+          {
+              <div class="panel panel-default">
+                  <div class="panel-body">
+                      <div class="col-md-10">
+                          @item.description : <b>@Html.Raw(item.action)</b>
+                      </div>
+                      <div class="col-md-2">
+                          <i class="fa fa-star-half-o fa-2x text-muted pull-right"></i>
+                      </div>
+                  </div>
+              </div>
+          }
+      </div>
+  </div>
+    <div class="row">
+        <div class="text-center">
+            @Html.PagedListPager(Model, page => Url.Action("Activity", new { page }))
+        </div>
+    </div>
+</div>

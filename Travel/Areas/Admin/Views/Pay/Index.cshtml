@@ -1,0 +1,141 @@
+﻿@{
+    var system = (Model.EntityFramework.SystemConfig)ViewBag.System;
+    ViewBag.Title = system.NameWebsite + " | Cấu hình thanh toán";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section header_h1{
+    Cấu hình thanh toán
+}
+@section header_a
+{
+    Cấu hình thanh toán
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/controllers/PayController.js"></script>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Thanh toán được chấp nhận</h3>
+            <p>Các hình thức thanh toán khi mua hàng</p>
+        </div>
+        <div class="col-md-7">
+
+            <!--OnePay ATM-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="img-responsive center-block" src="~/images/images/Admin/Pay/onepay_atm.jpg" />
+                        </div>
+                        <div class="col-md-6">
+                            <p>Cửa hàng của bạn chưa cấu hình thanh toán online bằng thẻ nội địa (ATM). Để tìm hiểu thêm về OnePay và các thông tin khác vui lòng <a href="https://docs.bizweb.vn/tich-hop-cong-thanh-toan-onepay-303.html">xem tại đây</a><p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="Button clearfix">
+                        <button type="button" class="btn btn-default btn-onepay-atm-setting pull-right">Thiết lập</button>
+                    </div>
+                    <div id="hidden" hidden="hidden">
+                        <hr />
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label>Tên phương thức</label>
+                                    <input type="text" class="form-control" id="name_OnePayATM" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Tài khoản Merchant</label>
+                                    <input type="text" class="form-control" id="account_Merchant" />
+                                </div>
+                                <div class="form-group">
+                                    <label>HashCode</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="hash_code" />
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default show_hash_code" data-toggle="tooltip" data-placement="bottom" title="Xem"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>AccessCode</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="access_code" />
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default show_access_code" data-toggle="tooltip" data-placement="bottom" title="Xem"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="container col-md-11 clearfix">
+                            <button type="button" class="btn btn-default btn-save-onepay-atm pull-right">Lưu</button>
+                            <button type="button" class="btn btn-default pull-left btn-unchange">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--OnePay Visa-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="img-responsive center-block" src="~/images/images/Admin/Pay/onepay_visa.jpg" />
+                        </div>
+                        <div class="col-md-6">
+                            <p>Cửa hàng của bạn chưa cấu hình thanh toán online qua thẻ quốc tế (Visa/Master Card). Để tìm hiểu thêm về OnePay và các thông tin khác vui lòng <a href="https://docs.bizweb.vn/tich-hop-cong-thanh-toan-onepay-303.html">xem tại đây</a><p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="Button clearfix">
+                        <button type="button" class="btn btn-default btn-onepay-visa-setting pull-right">Thiết lập</button>
+                    </div>
+                    <div id="hidden" hidden="hidden">
+                        <hr />
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label>Tên phương thức</label>
+                                    <input type="text" class="form-control" id="name_OnePayATM" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Tài khoản Merchant</label>
+                                    <input type="text" class="form-control" id="account_Merchant" />
+                                </div>
+                                <div class="form-group">
+                                    <label>HashCode</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="hash_code" />
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default show_hash_code" data-toggle="tooltip" data-placement="bottom" title="Xem"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>AccessCode</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="access_code" />
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default show_access_code" data-toggle="tooltip" data-placement="bottom" title="Xem"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="container col-md-11 clearfix">
+                            <button type="button" class="btn btn-default btn-save-onepay-atm pull-right">Lưu</button>
+                            <button type="button" class="btn btn-default pull-left btn-unchange">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

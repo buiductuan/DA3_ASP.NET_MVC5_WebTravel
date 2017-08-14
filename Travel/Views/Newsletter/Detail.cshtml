@@ -1,0 +1,120 @@
+﻿@model Model.EntityFramework.Newsletter
+@{
+    var getNews = (IEnumerable<Model.EntityFramework.Newsletter>)ViewBag.GetNews;
+    var getHotNews = (IEnumerable<Model.EntityFramework.Newsletter>)ViewBag.GetHotNews;
+    var systemConfig = (Model.EntityFramework.SystemConfig)ViewBag.SystemConfig;
+    ViewBag.Title = "TravelHappy | " + @Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div id="News_Content">
+        <div class="alias">
+            <a href="/">@systemConfig.NameWebsite / </a>
+            <a href="/tin-tuc/@Model.MetaTitle-@Model.ID">@(Model.Name)</a>
+        </div>
+        <hr />
+        <div class="news_detail">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>@Model.Name</h3>
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <span class="pull-left">@(Convert.ToDateTime(Model.CreatedDate).ToShortDateString())</span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="pull-right">@(Model.ViewCount)</span><i style="margin-right:5px;margin-top:3px;" class="fa fa-eye pull-right"></i>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="share_socical">
+                        <div class="fb-like" data-href="/tin-tuc/@Model.MetaTitle-@Model.ID" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                        <br />
+                        <div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-height="60" data-href="http://www.fb.com/tamnguyen9z"></div>
+                        <!-- Place this tag after the last share tag. -->
+                        <script type="text/javascript">
+                            (function () {
+                                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                                po.src = 'https://apis.google.com/js/platform.js';
+                                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                            })();
+                        </script>
+                    </div>
+                    @Html.Raw(Model.Detail)
+                    @{
+                        var listTags = (List<Model.EntityFramework.Tag>)ViewBag.ListTags;
+                        if (listTags != null)
+                        {
+                            <h3>Tags</h3>
+                            <hr />
+                            foreach (var tag in listTags)
+                            {
+                                <label class="label label-primary"><a class="white" href="/hashtags/@tag.TagID">@tag.Name</a></label>
+                            }
+                        }
+                        else
+                        {
+                            <h3>Tags</h3>
+                            <p>Đang cập nhật</p>
+                        }
+                    }
+                    <hr />
+                    <div class="comment">
+                        <h3>Bình luận</h3>
+                        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="5"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    @*Getnews*@
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-heading-block">
+                                <span>Tin mới nhất</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            @foreach (var item in getNews)
+                           {
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="/tin-tuc/@item.MetaTitle-@(item.ID).html">
+                                        <img src="~/images/images/Newsletter/@item.Image" alt="@item.Name" title="@item.Name" class="img-responsive center-block" />
+                                    </a>
+                                </div>
+                                <div class="col-md-8">
+                                    <a href="/tin-tuc/@item.MetaTitle-@(item.ID).html" class="subtext-1x">@(item.Name.ToString().Substring(0, 35))</a>
+                                    <p class="subtext-1x">@(Convert.ToDateTime(item.CreatedDate).ToShortDateString())</p>
+                                </div>
+                            </div>
+                           }
+                        </div>
+                    </div>
+                    <hr />
+                    @*GetHotnews*@
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-heading-block">
+                                <span>Tin quan tâm</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            @foreach (var item in getHotNews)
+                            {
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="/tin-tuc/@item.MetaTitle-@(item.ID).html">
+                                        <img src="~/images/images/Newsletter/@item.Image" alt="@item.Name" title="@item.Name" class="img-responsive center-block" />
+                                    </a>
+                                </div>
+                                <div class="col-md-8">
+                                    <a href="/tin-tuc/@item.MetaTitle-@(item.ID).html" class="subtext-1x">@(item.Name.ToString().Substring(0, 35))</a>
+                                    <p class="subtext-1x">@(Convert.ToDateTime(item.CreatedDate).ToShortDateString())</p>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

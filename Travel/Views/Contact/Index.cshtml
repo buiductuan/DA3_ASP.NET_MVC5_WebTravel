@@ -1,0 +1,59 @@
+﻿@model Model.EntityFramework.FeedBack
+@{
+    var contact = (Model.EntityFramework.SystemConfig)ViewBag.SystemConfig;
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script src="~/Assets/Client/controllers/ContactController.js"></script>
+}
+<div id="travel-contact" class="travel-section-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box fadeInUp animated">
+                <h3>Thông tin liên hệ</h3>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+        </div>
+        <div class="row animate-box fadeInUp animated">
+            <div class="col-md-6">
+                <h3 class="section-title">Địa chỉ của chúng tôi</h3>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                <ul class="contact-info">
+                    <li><i class="icon-location-pin"></i>@contact.Location</li>
+                    <li><i class="icon-phone2"></i>@contact.Phone</li>
+                    <li><i class="icon-mail"></i><a href="#">@contact.EmailNotification</a></li>
+                    <li><i class="icon-globe2"></i><a href="#">www.@(contact.NameWebsite).com</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="error_Name_Contact"></label>
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Họ và tên" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label id="error_Email_Contact"></label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label id="error_Message_Contact"></label>
+                            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @placeholder = "Nội dung" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn_sendFeedback">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="map"></div>

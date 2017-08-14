@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "TravelHappy | DashBoard";
+    ViewBag.Name = ViewBag.Name_Session;
+    ViewBag.ImageUser = ViewBag.ImageUser_Session;
+    var TotalPR = (long)ViewBag.CountProduct;
+    var TotalBL = (long)ViewBag.CountBlog;
+    var TotalOR = (long)ViewBag.CountOrder;
+    var TotalCUS = (long)ViewBag.CountCustomer; 
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section header_h1{
+    DashBoard
+}
+@section header_a{
+    DashBoard
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/controllers/HomeController.js"></script>
+}
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@TotalOR</h3>
+                <p>@(StaticResource.Resource.Admin_Home_Panel_Order)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="/Admin/Order" class="small-box-footer">@(StaticResource.Resource.Admin_Home_Panel_ViewMore) <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@TotalPR</h3>
+                <p>@(StaticResource.Resource.Admin_Home_Panel_Product)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="/Admin/Product" class="small-box-footer">@(StaticResource.Resource.Admin_Home_Panel_ViewMore) <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>@TotalCUS</h3>
+                <p>@(StaticResource.Resource.Admin_Home_Panel_Customer)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="/Admin/Customer" class="small-box-footer">@(StaticResource.Resource.Admin_Home_Panel_ViewMore) <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>@TotalBL</h3>
+                <p>@(StaticResource.Resource.Admin_Home_Panel_Blog)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="/Admin/Newsletter" class="small-box-footer">@(StaticResource.Resource.Admin_Home_Panel_ViewMore) <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+
+    <hr />
+    <div class="col-md-11">
+        <h3>@(StaticResource.Resource.Admin_Home_Statistic)</h3>
+        <div id="myfirstchart" class="clearfix" style="height: 250px;margin-bottom:30px;margin-top:30px;"></div>
+    </div>
+    <hr />
+    @if (Model != null)
+    {
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header clearfix">
+                    <h3 class="box-title">
+                        <b>@(StaticResource.Resource.Admin_Home_History)</b>
+                    </h3>
+                    <a href="/Admin/Home/Activity" class="btn btn-default pull-right">@(StaticResource.Resource.Admin_TextButton_ViewActivity)</a>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.createBy</td>
+                                    <td>@Html.Raw(item.action)</td>
+                                    <td>@item.description</td>
+                                    <td>@(Convert.ToDateTime(item.time).ToShortDateString() + " - " + Convert.ToDateTime(item.time).ToShortTimeString())</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    }
+    else
+    {
+        <span class="alert alert-danger text-center">Hệ thống không có thao tác được lưu trữ</span>
+    }
+</div>
+<div class="modal fade" id="modal_Report_Home_Admin">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@(StaticResource.Resource.Admin_Welcome) @ViewBag.Name</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@(StaticResource.Resource.Admin_TextButton_Close)</button>
+            </div>
+        </div>
+    </div>
+</div>

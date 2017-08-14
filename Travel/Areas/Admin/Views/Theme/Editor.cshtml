@@ -1,0 +1,382 @@
+﻿@model Model.EntityFramework.Theme
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TravelHappy | Tùy biến giao diện</title>
+    <link href="~/Assets/Admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Assets/Admin/dist/css/cutome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="~/Assets/Admin/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="~/Assets/Admin/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#screen-desktop").click(function () {
+                $("#screen-desktop").addClass("screen-active");
+                $("#screen-tablet").removeClass("screen-active");
+                $("#screen-mobile").removeClass("screen-active");
+                $("#screen-iframe").css({
+                    "width": "1470px",
+                    "margin-left": "0px",
+                    "height": "1000px"
+                });
+            });
+            $("#screen-tablet").click(function () {
+                $("#screen-tablet").addClass("screen-active");
+                $("#screen-desktop").removeClass("screen-active");
+                $("#screen-mobile").removeClass("screen-active");
+                $("#screen-iframe").css({
+                    "width": "768px",
+                    "margin-left": "150px",
+                    "height": "1000px"
+                });
+            });
+            $("#screen-mobile").click(function () {
+                $("#screen-mobile").addClass("screen-active");
+                $("#screen-tablet").removeClass("screen-active");
+                $("#screen-desktop").removeClass("screen-active");
+                $("#screen-iframe").css({
+                    "width": "480px",
+                    "margin-left": "270px",
+                    "height": "800px",
+                });
+            });
+        });
+    </script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#image_preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageAvatar").change(function () {
+            readURL(this);
+        });
+    </script>
+    <style>
+        .default-color {
+            background-color: #35859f;
+        }
+
+        .screen-active {
+            background-color: #43A9E4;
+            color: #FFF;
+        }
+
+        .pagination {
+            border: .5px solid#DDD;
+            background-color: #FFF;
+            color: #37A3D0;
+        }
+
+            .pagination li {
+                border: .5px solid#DDD;
+                padding: 12px;
+                display: inline-block;
+            }
+
+                .pagination li:hover {
+                    cursor: pointer;
+                }
+
+        .panel-body a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body style="background-color:#eee">
+    <!--Navbar-->
+    <nav class="navbar narbar-inverse default-color">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                <ul class="nav navbar-nav">
+                    <li><a href="/Admin/Theme" style="color:white"><i class="fa fa-long-arrow-left"></i> Quay lại giao diện</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @try
+    {
+    <!--/.Navbar-->
+        using (Html.BeginForm("Editor", "Theme", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <main>
+                <div id="main-wapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="theme">
+                                    <iframe id="screen-iframe" src="/"></iframe>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading text-center">
+                                        <h5>Default theme</h5>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        <a href="#" class="text-2x">Thiết lập mẫu</a><br><hr>
+                                        <a href="#" class="text-2x" data-toggle="modal" data-target="#modal_Logo_SlideHeader" id="setting-change">Logo và đầu trang</a><br><hr>
+                                        <a href="#" class="text-2x" data-toggle="modal" data-target="#modal_home">Trang chủ</a><br><hr>
+                                        <a href="#" class="text-2x" data-toggle="modal" data-target="#modal_footer">Chân trang</a><br><hr>
+                                        <a href="#" class="text-2x" data-toggle="modal" data-target="#modal_tour">Trang sản phẩm</a><br><hr>
+                                        <a href="#" class="text-2x" data-toggle="modal" data-target="#modal_blog">Trang tin tức</a><br><hr>
+                                    </div>
+                                    <div class="panel-footer text-center">
+                                        <a href="/Admin/Theme" class="btn btn-danger">Hủy thay đổi</a>
+                                        <a href="#" data-toggle="modal" data-target="#modal_notification" class="btn btn-primary">Lưu thay đổi</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="screen">
+                            <ul class="pagination">
+                                <li class="screen-active text-center" id="screen-desktop">
+                                    <i class="fa fa-tv"></i><br>
+                                    <b class="sub2">Desktop</b>
+                                </li>
+                                <li id="screen-tablet" class="text-center">
+                                    <i class="fa fa-tablet"></i><br>
+                                    <b class="sub2">Tablet</b>
+                                </li>
+                                <li id="screen-mobile" class="text-center">
+                                    <i class="fa fa-mobile"></i><br>
+                                    <b class="sub2">Mobile</b>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+    <!-- Modal -->
+    <!-- Thiết lập logo đầu trang -->
+            <div class="modal fade" id="modal_Logo_SlideHeader" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Thiết lập chung</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ảnh nền</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img id="image_preview" src="~/images/images/Slides/@Model.Header_image" alt="" class="img-responsive">
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="file-field input-field">
+                                        <span>Upload</span>
+                                        <input type="file" name="file" id="imageAvatar" accept="image/x-png,image/jpeg" />
+                                    </div>
+                                </div>
+                            </div><br>
+                            <p class="sub2"><em>Kích thước đề nghị tối đa cho ảnh Logo có chiều cao: 620px</em></p>
+                            <hr>
+                            <label>Tiêu đề</label>
+                            @Html.TextBoxFor(model => model.Header_Description, new { @class = "form-control", @placeholder = "Tiêu đề đầu trang" });
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Thiết lập logo đầu trang -->
+
+    <!-- Home -->
+            <div class="modal fade" id="modal_home" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Trang chủ</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>Tiêu đề tour </label>
+                            @Html.TextBoxFor(model => model.Home_Title_P, new { @class = "form-control", @placeholder = "Tiêu đề tour" })
+                            <hr />
+                            <label>Mô tả tour </label>
+                            @Html.TextAreaFor(model => model.Home_Description_P, new { @class = "form-control", @placeholder = "Mô tả tour" })
+                            <hr />
+                            <label>Tiêu đề blog </label>
+                            @Html.TextBoxFor(model => model.Home_Title_Blog, new { @class = "form-control", @placeholder = "Tiêu đề blog" })
+                            <hr />
+                            <label>Mô tả blog </label>
+                            @Html.TextAreaFor(model => model.Home_Description_Blog, new { @class = "form-control", @placeholder = "Mô tả blog" })
+                            <hr />
+                            <label>Tiêu đề Feedback </label>
+                            @Html.TextBoxFor(model => model.Feedback_Title, new { @class = "form-control", @placeholder = "Tiêu đề feedback" })
+                            <hr />
+                            <label>Mô tả Feedback </label>
+                            @Html.TextAreaFor(model => model.Feedback_Description, new { @class = "form-control", @placeholder = "Mô tả feedback" })
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Số tour hiển thị</label>
+                                    @Html.TextBoxFor(model => model.Home_Number_P, new { @class = "form-control", @placeholder = "Số tour hiển thị" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Số blog hiển thị</label>
+                                    @Html.TextBoxFor(model => model.Home_Number_Blog, new { @class = "form-control", @placeholder = "Số blog hiển thị" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!--Home -->
+
+    <!--Footer -->
+            <div class="modal fade" id="modal_footer" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Chân trang</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>Giới thiệu</label>
+                            @Html.TextAreaFor(model => model.Footer_About, new { @class = "form-control", @placeholder = "Giới thiệu" })
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Đường dẫn facebook</label>
+                                    @Html.TextBoxFor(model => model.Footer_facebook_Link, new { @class = "form-control", @placeholder = "Đường dẫn facebook" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Đường dẫn twitter</label>
+                                    @Html.TextBoxFor(model => model.Footer_twitter_Link, new { @class = "form-control", @placeholder = "Đường dẫn twitter" })
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Đường dẫn instagram</label>
+                                    @Html.TextBoxFor(model => model.Footer_instagram_Link, new { @class = "form-control", @placeholder = "Đường dẫn instagram" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Đường dẫn youtube</label>
+                                    @Html.TextBoxFor(model => model.Footer_youtube_Link, new { @class = "form-control", @placeholder = "Đường dẫn youtube" })
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Copyright</label>
+                                    @Html.TextBoxFor(model => model.Footer_Copyright, new { @class = "form-control", @placeholder = "Copyright" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Tác giả</label>
+                                    @Html.TextBoxFor(model => model.Footer_Author, new { @class = "form-control", @placeholder = "Tác giả" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Footer -->
+
+
+    <!-- Trang Product -->
+            <div class="modal fade" id="modal_tour" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Tour</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>Tiêu đề</label>
+                            @Html.TextBoxFor(model => model.Product_Title, new { @class = "form-control", @placeholder = "Tiêu đề" })
+                            <hr />
+                            <label>Mô tả</label>
+                            @Html.TextAreaFor(model => model.Product_Description, new { @class = "form-control", @placeholder = "Mô tả" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Trang tour -->
+
+
+    <!-- Trang Blog -->
+            <div class="modal fade" id="modal_Blog" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Tour</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>Tiêu đề</label>
+                            @Html.TextBoxFor(model => model.Product_Title, new { @class = "form-control", @placeholder = "Tiêu đề" })
+                            <hr />
+                            <label>Mô tả</label>
+                            @Html.TextAreaFor(model => model.Product_Description, new { @class = "form-control", @placeholder = "Mô tả" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Trang blog -->
+            <div class="modal fade" id="modal_notification" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Bạn có muốn lưu lại tất cả thay đổi ???</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                            <button type="submit" class="btn btn-primary">Đồng ý</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Modal -->
+        }
+    }
+    catch (Exception) { }
+
+</body>
+</html>

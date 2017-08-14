@@ -1,0 +1,36 @@
+﻿@model List<Model.EntityFramework.Menu>
+@{
+    var systemconfig = (Model.EntityFramework.SystemConfig)ViewBag.SystemConfig;
+    var theme = (Model.EntityFramework.Theme)ViewBag.Theme;
+}
+<div id="footer">
+    <div class="container">
+        <div class="row row-bottom-padded-md">
+            <div class="col-md-2 col-sm-2 col-xs-12 travel-footer-link">
+                <h3>@systemconfig.NameWebsite</h3>
+                <p>@theme.Footer_About</p>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12 travel-footer-link">
+                <h3>@systemconfig.NameWebsite</h3>
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li><a href="@item.Link">@item.Text</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 pull-right">
+                <div class="fb-page" data-href="https://www.facebook.com/vntravel/?fref=ts" data-tabs="timeline" data-height="210" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/vntravel/?fref=ts" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/vntravel/?fref=ts">TravelHappy</a></blockquote></div></div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <p class="travel-social-icons">
+                    <a target="_blank" href="@theme.Footer_twitter_Link"><i class="icon-twitter2"></i></a>
+                    <a target="_blank" href="@theme.Footer_facebook_Link"><i class="icon-facebook2"></i></a>
+                    <a target="_blank" href="@theme.Footer_instagram_Link"><i class="icon-instagram"></i></a>
+                    <a target="_blank" href="@theme.Footer_youtube_Link"><i class="icon-youtube"></i></a>
+                </p>
+                <p>@theme.Footer_Copyright<br>Made with <i class="icon-heart3"></i> by <a href="/" target="_blank">@theme.Footer_Author</a></p>
+            </div>
+        </div>
+    </div>
+</div>
